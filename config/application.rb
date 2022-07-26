@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "boot"
 
 require "rails/all"
@@ -9,7 +11,7 @@ Bundler.require(*Rails.groups)
 module RorReactTypescriptTemplate
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.1
+    config.load_defaults(6.1)
     config.react.server_renderer_extensions = ["jsx", "js", "tsx", "ts"]
 
     # Configuration for the application, engines, and railties goes here.
