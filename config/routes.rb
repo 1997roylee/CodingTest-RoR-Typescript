@@ -2,8 +2,20 @@
 
 Rails.application.routes.draw do
   root to: "home#landing"
-  patch "todo_item/:todo_item_id", to: "home#edit_todo_item"
-  post "todo_item", to: "home#create_todo_item"
-  post "reset", to: "home#reset_todo_items"
-  post "bulk_edit", to: "home#bulk_edit_todo_items"
+
+  mount ActionCable.server => "/cable"
+
+  namespace :api, defaults: { format: :json } do
+    resources :history, param: :version_id, only: [:index] do
+      member do
+        post :revert
+      end
+    end
+    resources :todos, param: :todo_id, only: [:create, :update, :destroy]
+    resources :todo_groups, param: :todo_group_id, only: [:create, :destroy] do
+      member do
+        post :reset
+      end
+    end
+  end
 end
