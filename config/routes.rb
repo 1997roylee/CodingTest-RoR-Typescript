@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   mount ActionCable.server => "/cable"
 
+  get "home", to: "home#index"
+
   namespace :api, defaults: { format: :json } do
     resources :history, param: :version_id, only: [:index] do
       member do
