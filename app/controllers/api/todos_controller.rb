@@ -27,7 +27,7 @@ module Api
     ## delete /api/todos/:todo_id
     ## delete /api/todos/:todo_id.json
     def destroy
-      @todo.delete
+      @todo.destroy
       broadcast(type: "RemoveTodo", payload: @todo, user_id: current_user_id)
       render(json: {})
     end
