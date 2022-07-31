@@ -5,7 +5,7 @@ class Version < ApplicationRecord
 
   def revert!
     new_object = object_to_yaml
-    if event == :update.to_s or event == :destroy.to_s
+    if (event == :update.to_s) || (event == :destroy.to_s)
       if item_type == :Todo.to_s
         todo_group = TodoGroup.find_by(id: new_object[:todo_group_id])
         if todo_group.blank?
@@ -14,11 +14,10 @@ class Version < ApplicationRecord
         end
       end
       reify.save!
-      delete
     else
       item.destroy
-      delete
     end
+    delete
   end
 
   private
