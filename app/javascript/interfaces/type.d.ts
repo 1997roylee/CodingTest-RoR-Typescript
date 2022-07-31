@@ -19,4 +19,5 @@ type Version = {
     item_id: number;
     item_type: string;
     new_object: any
+    created_at: Date
 }
