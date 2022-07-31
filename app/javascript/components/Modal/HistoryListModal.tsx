@@ -22,7 +22,7 @@ export function HistoryListModal(props: Props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <HistoryList />
+                <HistoryList onUndoSuccess={props.onHide} />
 
             </Modal.Body>
             <Modal.Footer>
