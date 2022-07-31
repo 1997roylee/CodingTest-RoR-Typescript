@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include RenderHelper
   helper_method :broadcast
   helper_method :current_user_id
 
