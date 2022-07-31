@@ -1,5 +1,6 @@
 import create, { useStore as _useStore } from 'zustand'
 import produce from 'immer'
+import axios from 'axios'
 
 export interface TodoGroupState {
     todoGroups: TodoGroup[]
@@ -10,6 +11,7 @@ export interface TodoGroupState {
     removeTodo: (todoGroupId: number | string, id: number | string) => void
     patchTodo: (todo: TodoItem) => void
     resetTodoByGroup: (todoGroupId: number | string, timestamp: string) => void
+    reload: () => void
 }
 
 export const createTodoGroupStore = (todoGroups: TodoGroup[]) => create<TodoGroupState>((set, get) => ({
@@ -58,13 +60,19 @@ export const createTodoGroupStore = (todoGroups: TodoGroup[]) => create<TodoGrou
         produce((state) => {
 
             const todoGroup: TodoGroup = state.todoGroups.find((el) => el.id === todoGroupId);
-            // console.log(timestamp, todoGroup.todos[0].updated_at)
             todoGroup.todos && todoGroup.todos.forEach(todo => {
                 todo.checked = false
                 todo.updated_at = timestamp
             })
         })
     ),
+    reload: async () => {
+        const response = await axios.get("/home.json")
+        const todoGroups: TodoGroup[] = response.data.todo_groups
+        set({
+            todoGroups
+        })
+    }
 }))
 
 export const useTodoGroupStore = createTodoGroupStore([])

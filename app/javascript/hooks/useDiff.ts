@@ -12,6 +12,9 @@ export const useDiff = (type: string, payload: any, userId: string) => {
     const state = getState()
 
     switch (type) {
+        case "Reload":
+            state.reload()
+            break
         case "NewTodo":
             todoList = state.todoGroups.reduce((result, todoGroup) => [...result, ...(todoGroup.todos || [])], [])
             todo = todoList.find((el) => el.id === payload.id)
